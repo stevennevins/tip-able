@@ -4,11 +4,14 @@ pragma solidity ^0.8.13;
 contract Tippable {
     uint256 public totalTips;
     uint256 internal subsidy;
+    uint256 internal totalGasPrice;
+    uint256 internal numberOfTips;
 
     modifier tip() {
         uint256 tip = tx.gasprice * subsidy;
         totalTips += msg.value;
         require(address(this).balance >= tip + totalTips, "Insufficient tip");
+        _;
     }
 
     function setTotalTips(uint256 _totalTips) public {
@@ -19,7 +22,9 @@ contract Tippable {
         subsidy = _subsidy;
     }
 
-    // function removed
+    function min(uint256 a, uint256 b) internal returns (uint256) {
+        return (a > b) ? b : a;
+    }
 
     function averageGasPrice() private view returns (uint256) {
         return totalGasPrice / numberOfTips;

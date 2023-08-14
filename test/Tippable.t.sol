@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import {Test, console2} from "forge-std/Test.sol";
-import {Tippable} from "../src/Tippable.sol";
+import {Tippable} from "src/Tippable.sol";
 
 contract TippableTest is Test {
     Tippable public tippable;
@@ -10,7 +10,6 @@ contract TippableTest is Test {
     function setUp() public {
         tippable = new Tippable();
     }
-
     function testTip() public {
         uint256 initialBalance = tippable.balance;
         tippable.tip{value: 1 ether}();
