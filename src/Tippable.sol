@@ -31,6 +31,14 @@ contract Tippable {
     function calculateAverageGasPrice() public view returns (uint256) {
         return totalGasPrice / numTips;
     }
+    
+    function min(uint256 a, uint256 b) private pure returns (uint256) {
+        return a < b ? a : b;
+    }
+    
+    function min(uint256 a, uint256 b) private pure returns (uint256) {
+        return a < b ? a : b;
+    }
 
     modifier payOutTip(uint256 _actions) {
         uint256 tips = subsidy * _actions * min(tx.gasprice, calculateAverageGasPrice());
