@@ -23,14 +23,6 @@ pragma solidity ^0.8.13;
     
     // function removed
     
-    function min(uint256 a, uint256 b) private pure returns (uint256) {
-        return a < b ? a : b;
-    }
-    
-    function averageGasPrice() private view returns (uint256) {
-        return totalGasPrice / numberOfTips;
-    }
-    
     function averageGasPrice() private view returns (uint256) {
         return totalGasPrice / numberOfTips;
     }
