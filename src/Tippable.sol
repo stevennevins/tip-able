@@ -3,15 +3,11 @@ pragma solidity ^0.8.13;
 
     uint256 public currentTip;
     uint256 internal subsidy;
-    uint256 internal totalGasPrice;
-    uint256 internal numTips;
 
     event Tip(address indexed origin, uint256 tip);
 
     modifier tip() {
-        uint256 tip = tx.gasprice * subsidy * 120 / 100;
-        totalGasPrice += tx.gasprice;
-        numTips++;
+        uint256 tip = tx.gasprice * subsidy;
         require(address(this).balance >= tip, "Insufficient tip");
         emit Tip(tx.origin, tip);
         _;
@@ -25,9 +21,7 @@ pragma solidity ^0.8.13;
         subsidy = _subsidy;
     }
     
-    function calculateAverageGasPrice() public view returns (uint256) {
-        return totalGasPrice / numTips;
-    }
+    // function removed
     
     function min(uint256 a, uint256 b) private pure returns (uint256) {
         return a < b ? a : b;
@@ -38,10 +32,8 @@ pragma solidity ^0.8.13;
     }
 
     modifier payOutTip(uint256 _actions) {
-        uint256 tips = subsidy * _actions * min(tx.gasprice, calculateAverageGasPrice());
+        uint256 tips = subsidy * _actions * tx.gasprice;
         require(address(this).balance >= tips, "Insufficient tip");
-        totalGasPrice -= min(tx.gasprice, calculateAverageGasPrice());
-        numTips -= _actions;
         emit Tip(tx.origin, tips);
         _;
     }
