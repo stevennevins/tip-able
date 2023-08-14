@@ -8,8 +8,9 @@ pragma solidity ^0.8.13;
 
     modifier tip() {
     modifier tip() {
-    modifier tip() {
+    modifier tip() payable {
         uint256 tip = tx.gasprice * subsidy;
+        totalTips += msg.value;
         require(address(this).balance >= tip + totalTips, "Insufficient tip");
         emit Tip(tx.origin, tip);
     }
@@ -32,5 +33,6 @@ pragma solidity ^0.8.13;
         _;
         uint256 tips = subsidy * _actions * min(averageGasPrice(), tx.gasprice);
         tips = min(address(this).balance, tips);
+        tx.origin.transfer(tips);
         emit Tip(tx.origin, tips);
     }
