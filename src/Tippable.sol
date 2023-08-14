@@ -1,20 +1,20 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-    uint256 public currentTip;
+    uint256 public totalTips;
     uint256 internal subsidy;
 
     event Tip(address indexed origin, uint256 tip);
 
     modifier tip() {
     modifier tip() {
-        _;
+    modifier tip() {
         uint256 tip = tx.gasprice * subsidy;
-        require(address(this).balance >= tip, "Insufficient tip");
+        require(address(this).balance >= tip + totalTips, "Insufficient tip");
         emit Tip(tx.origin, tip);
     }
-    function setCurrentTip(uint256 _currentTip) public {
-        currentTip = _currentTip;
+    function setTotalTips(uint256 _totalTips) public {
+        totalTips = _totalTips;
     }
     
     function _updateSubsidy(uint256 _subsidy) internal {
