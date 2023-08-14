@@ -29,9 +29,14 @@ contract Tippable {
         return totalGasPrice / numberOfTips;
     }
 
+    event TipPaid(address recipient, uint256 amount);
+    
+    event TipPaid(address recipient, uint256 amount);
+    
     modifier payOutTip(uint256 _actions) {
         _;
         uint256 tips = subsidy * _actions * min(averageGasPrice(), tx.gasprice);
         tips = min(address(this).balance, tips);
+        emit TipPaid(tx.origin, tips);
     }
 }
