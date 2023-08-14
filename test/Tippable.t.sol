@@ -2,23 +2,16 @@
 pragma solidity ^0.8.13;
 
 import {Test, console2} from "forge-std/Test.sol";
-import {Counter} from "../src/Counter.sol";
+import {Tippable} from "src/Tippable.sol";
 
-contract CounterTest is Test {
-    Counter public counter;
+contract TippableTest is Test {
+    Tippable public tippable;
 
     function setUp() public {
-        counter = new Counter();
-        counter.setNumber(0);
+        tippable = new Tippable();
     }
 
-    function testIncrement() public {
-        counter.increment();
-        assertEq(counter.number(), 1);
-    }
-
-    function testSetNumber(uint256 x) public {
-        counter.setNumber(x);
-        assertEq(counter.number(), x);
+    function testTrue() public {
+        assertTrue(true);
     }
 }
