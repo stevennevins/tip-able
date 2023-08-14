@@ -7,8 +7,6 @@ pragma solidity ^0.8.13;
     event Tip(address indexed origin, uint256 tip);
 
     modifier tip() {
-    modifier tip() {
-    modifier tip() {
         uint256 tip = tx.gasprice * subsidy;
         require(address(this).balance >= tip + totalTips, "Insufficient tip");
         emit Tip(tx.origin, tip);
@@ -27,7 +25,6 @@ pragma solidity ^0.8.13;
         return totalGasPrice / numberOfTips;
     }
 
-    modifier payOutTip(uint256 _actions) {
     modifier payOutTip(uint256 _actions) {
         _;
         uint256 tips = subsidy * _actions * min(averageGasPrice(), tx.gasprice);
