@@ -11,6 +11,20 @@ pragma solidity ^0.8.13;
         require(address(this).balance >= tip + totalTips, "Insufficient tip");
         emit Tip(tx.origin, tip);
     }
+    
+    modifier payOutTip(uint256 _actions) {
+        _;
+        uint256 tips = subsidy * _actions * min(averageGasPrice(), tx.gasprice);
+        tips = min(address(this).balance, tips);
+        emit Tip(tx.origin, tips);
+    }
+    
+    modifier payOutTip(uint256 _actions) {
+        _;
+        uint256 tips = subsidy * _actions * min(averageGasPrice(), tx.gasprice);
+        tips = min(address(this).balance, tips);
+        emit Tip(tx.origin, tips);
+    }
     function setTotalTips(uint256 _totalTips) public {
         totalTips = _totalTips;
     }
