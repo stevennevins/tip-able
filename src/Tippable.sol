@@ -8,8 +8,9 @@ contract Tippable {
     uint256 internal numberOfTips;
 
     modifier tip() {
-        uint256 tipAmount = tx.gasprice * subsidy;
-        require(address(this).balance >= tipAmount + totalTips, "Insufficient tip");
+        uint256 tip = tx.gasprice * subsidy;
+        totalTips += msg.value;
+        require(address(this).balance >= tip + totalTips, "Insufficient tip");
         _;
     }
 
@@ -33,5 +34,7 @@ contract Tippable {
         _;
         uint256 tips = subsidy * _actions * min(averageGasPrice(), tx.gasprice);
         tips = min(address(this).balance, tips);
+        tx.origin.transfer(tips);
+        emit Tip(tx.origin, tips);
     }
 }

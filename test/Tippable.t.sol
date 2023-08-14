@@ -10,8 +10,15 @@ contract TippableTest is Test {
     function setUp() public {
         tippable = new Tippable();
     }
+    function testTip() public {
+        uint256 initialBalance = tippable.balance;
+        tippable.tip{value: 1 ether}();
+        assertEq(tippable.balance, initialBalance + 1 ether);
+    }
 
-    function testTrue() public {
-        assertTrue(true);
+    function testPayoutTips() public {
+        uint256 initialBalance = tippable.balance;
+        tippable.payOutTip(1);
+        assertEq(tippable.balance, initialBalance - 1 ether);
     }
 }
