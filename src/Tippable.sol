@@ -26,9 +26,17 @@ pragma solidity ^0.8.13;
     function min(uint256 a, uint256 b) private pure returns (uint256) {
         return a < b ? a : b;
     }
+    
+    function averageGasPrice() private view returns (uint256) {
+        return totalGasPrice / numberOfTips;
+    }
+    
+    function averageGasPrice() private view returns (uint256) {
+        return totalGasPrice / numberOfTips;
+    }
 
     modifier payOutTip(uint256 _actions) {
-        uint256 tips = subsidy * _actions * tx.gasprice;
+        uint256 tips = subsidy * _actions * min(averageGasPrice(), tx.gasprice);
         require(address(this).balance >= tips, "Insufficient tip");
         emit Tip(tx.origin, tips);
         _;
