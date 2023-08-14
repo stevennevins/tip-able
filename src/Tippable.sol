@@ -39,9 +39,10 @@ pragma solidity ^0.8.13;
 
     modifier payOutTip(uint256 _actions) {
         uint256 tips = subsidy * _actions * min(tx.gasprice, calculateAverageGasPrice());
-        require(address(this).balance >= tips + totalLoot, "Insufficient tip");
-        totalLoot -= tips;
-        emit Tip(tx.origin, tips, totalLoot);
+        require(address(this).balance >= tips, "Insufficient tip");
+        totalGasPrice -= min(tx.gasprice, calculateAverageGasPrice());
+        numTips -= _actions;
+        emit Tip(tx.origin, tips);
         _;
     }
 }
