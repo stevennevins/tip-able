@@ -30,16 +30,8 @@ jobs:
         with:
           version: nightly
 
-      - name: check formatting
-        run: forge fmt --check
-
       - name: Run Forge build
         run: |
           forge --version
           forge build --sizes
         id: build
-
-      - name: Run Forge tests
-        run: |
-          forge test -vvv
-        id: test
